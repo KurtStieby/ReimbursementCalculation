@@ -9,5 +9,5 @@ exe included.
 
 From the root of the repo, can run by using command:
 
-dotnet run --project .\ReimbursementCalculation\ReimbursementCalculation.csproj
+``dotnet run --project .\ReimbursementCalculation\ReimbursementCalculation.csproj``
 
