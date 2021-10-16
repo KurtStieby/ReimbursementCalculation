@@ -205,11 +205,40 @@ namespace ReimbursementCalculation
             }
 
             // need to append travel days for before the first project and after the last project
-            if (Costs[0]) cost += 55;
-            else cost += 45;
 
-            if (Costs[Costs.Length - 1]) cost += 55;
-            else cost += 45;
+            // base for the first and last travel day
+            cost += 90;
+
+            // must account for if several projects are on the first/last day, and prioritize high cost project
+            int beginorend = begin[0];
+            int it = 0;
+
+            // comparator below has to be in this order
+            while (it < begin.Length && begin[it] == beginorend)
+            {
+                if (Costs[it])
+                {
+                    // additional amount if first day is high cost
+                    cost += 10;
+                    break;
+                }
+                it++;
+            }
+
+            it = end.Length - 1;
+            beginorend = end[it];
+
+            // comparator below has to be in this order
+            while (it >= 0 && end[it] == beginorend)
+            {
+                if (Costs[it])
+                {
+                    // additional amount if last day is high cost
+                    cost += 10;
+                    break;
+                }
+                it--;
+            }
 
             return cost;
         }
@@ -233,7 +262,6 @@ namespace ReimbursementCalculation
             bool[] Costs1 = new bool[1];
             Costs1[0] = false;
 
-            //Set Set1 = new Set(Starts1, Ends1, Costs1, 1);
             SetList.Add(new Set(Starts1, Ends1, Costs1, 1));
 
             // Sample 2
@@ -289,11 +317,12 @@ namespace ReimbursementCalculation
             Costs4[0] = false;
             Costs4[1] = false;
             Costs4[2] = true;
-            Costs4[2] = true;
+            Costs4[3] = true;
 
             SetList.Add(new Set(Starts4, Ends4, Costs4, 4));
 
-            // Printing initial screen
+            // Console display portion below
+
             int input;
             Console.WriteLine(" --- Select a set by entering its number to see the Project Reimbursement ---");
             foreach (Set S in SetList)
@@ -318,7 +347,7 @@ namespace ReimbursementCalculation
                 }
                 catch
                 {
-                    Console.WriteLine("Please enter an integer within the range of sets provided.");
+                    Console.WriteLine("Please enter an integer.");
                 }
             }
 
