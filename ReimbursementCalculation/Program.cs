@@ -42,6 +42,7 @@ namespace ReimbursementCalculation
             Console.WriteLine("\n");
         }
 
+        // calculate or return calculated cost
         public int getCost()
         {
             if(Cost != 0)
